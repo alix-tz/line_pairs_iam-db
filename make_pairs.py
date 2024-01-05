@@ -4,12 +4,6 @@ __credits__ = ["Alix Chagué"]
 __license__ = "MIT License"
 __version__ = "0.0.1"
 
-__author__ = "Alix Chagué"
-__copyright__ = "2024 Alix Chagué"
-__credits__ = ["Alix Chagué"]
-__license__ = "MIT License"
-__version__ = "0.0.1"
-
 """
 A parser to create pairs of TXT + PNG to train Kraken models on IAM Db
 """
