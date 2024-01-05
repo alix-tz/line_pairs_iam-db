@@ -4,13 +4,20 @@ __credits__ = ["Alix Chagué"]
 __license__ = "MIT License"
 __version__ = "0.0.1"
 
+__author__ = "Alix Chagué"
+__copyright__ = "2024 Alix Chagué"
+__credits__ = ["Alix Chagué"]
+__license__ = "MIT License"
+__version__ = "0.0.1"
+
 """
-A parser to create pairs of TXT + PNG from IAM Db
+A parser to create pairs of TXT + PNG to train Kraken models on IAM Db
 """
 
 import os
 import sys
 import lxml.etree as ET
+from tqdm import tqdm
 
 # lines.tgz and xml.tgz can be downloaded from http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database
 # lines.tgz should have been extracted in the same folder as this script under the name "lines"
@@ -38,9 +45,9 @@ if not os.path.exists(path_to_xml):
 print("Step 1/2 Parsing XML files and extracting transcriptions")
 transcriptions = {}
 
-for root, dirs, files in os.walk(path_to_xml):
+for root, dirs, files in tqdm(os.walk(path_to_xml)):
     for file in files:
-        print("Opening " + file)
+        #print("Opening " + file)
         xml_file = os.path.join(path_to_xml, file)
         root = ET.parse(xml_file).getroot()
         # get the value of the @id attribute of the "line" node
@@ -48,10 +55,10 @@ for root, dirs, files in os.walk(path_to_xml):
             if line.get("id") and line.get("text"):
                 transcriptions[line.get("id")] = line.get("text")
             else:
-                print("No id or text for line: " + line.get("id"))
+                print(f"In {file}, no id or text for line: {line.get('id')}")
 
-print("Step 2/2 Matching transcriptions with images, copying PNG files and creating TXT files")
-for root, dirs, files in os.walk(path_to_line_images):
+print("Step 2/2 Matching transcription with images, copying PNG files and creating TXT files")
+for root, dirs, files in tqdm(os.walk(path_to_line_images)):
     for file in files:
         # {extract_id}/{writer_id}/{extract_id}-{writer_id}-{line_id}.png
         extract_id = file.split("-")[0]
@@ -68,8 +75,7 @@ for root, dirs, files in os.walk(path_to_line_images):
         # copy the png file to the output folder
         os.system(f"cp {path_to_png} {output_folder}")
         # create a txt file with the transcription in the output folder
-        with open(os.path.join(output_folder, f"{extract_id}-{writer_id}-{line_id}.txt"), "w") as f:
+        with open(os.path.join(output_folder, f"{extract_id}-{writer_id}-{line_id}.gt.txt"), "w") as f:
             f.write(transcription)
 
 print("Done")
-
