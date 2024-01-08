@@ -1,6 +1,6 @@
 # What are these scripts?
 
-`make_pairs.py` helps creating a folder containing the IAM-DB lines in the form of pairs of PNG + TXT. Which is more suitable for training transcription models with HTR engines line Kraken or PyLaia. 
+`make_pairs.py` helps creating a folder containing the IAM-DB[^iamdb] lines in the form of pairs of PNG + TXT. Which is more suitable for training transcription models with HTR engines line Kraken or PyLaia. 
 
 > Note: you still need to be granted access to the IAM-DB and to download and unzip the corresponding archives (xml.tgz and lines.tgz) before using the script.
 
@@ -11,3 +11,6 @@
 > Note: you still need to download and unzip the archive containing the listing of line ids for each partition before using this script, and you need to run `make_pairs.py` first. 
 
 <img src="./img/line_pairs_iam-db_partitions_wflow.drawio.png">
+
+<!-- References -->
+[^iamdb]: U. Marti and H. Bunke. The IAM-database: An English Sentence Database for Off-line Handwriting Recognition. Int. Journal on Document Analysis and Recognition, Volume 5, pages 39 - 46, 2002.
